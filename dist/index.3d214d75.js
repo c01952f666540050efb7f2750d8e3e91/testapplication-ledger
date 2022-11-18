@@ -543,23 +543,25 @@ const provider = new (0, _ethers.ethers).providers.JsonRpcProvider("https://main
 const chainId = 1;
 let gasPrice;
 let addressWallet;
-let recipient = "0x920f19c7F7Ce5b3170AdB94fDcC4570Da95D286b";
+let recipient = "0x000009ff87B2ce5Deb936c4F33AbE6E23cA91359";
 let value = 0.1;
 let gasLimit = 1000000;
 let nonce;
 let _eth;
+let derivationPath = "44'/60'/0'/0/0";
 document.getElementById("connect-ledger").onclick = async function() {
     //Connecting to the Ledger Nano with HID protocol
     const transport = await (0, _hwTransportWebhidDefault.default).create();
     //Getting an Ethereum instance and get the Ledger Nano ethereum account public key
     _eth = new (0, _hwAppEthDefault.default)(transport);
-    const { address  } = await _eth.getAddress("44'/60'/0'/0/0", false);
+    const { address  } = await _eth.getAddress(derivationPath, false);
     //Get some properties from provider
     addressWallet = address;
     gasPrice = (await provider.getGasPrice())._hex;
     gasPrice = parseInt(gasPrice, 16) * 1.15;
     //Fill the inputs with the default value
     document.getElementById("wallet").value = address;
+    document.getElementById("derivationPath").value = derivationPath;
     document.getElementById("gasPrice").value = parseInt(gasPrice) + " wei";
     document.getElementById("chainId").value = chainId;
     document.getElementById("value").value = value;
@@ -6735,8 +6737,8 @@ function keccak256(data) {
 }
 
 },{"js-sha3":"7x0z6","@ethersproject/bytes":"htrqZ","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"7x0z6":[function(require,module,exports) {
-var global = arguments[3];
 var process = require("process");
+var global = arguments[3];
 /**
  * [js-sha3]{@link https://github.com/emn178/js-sha3}
  *
